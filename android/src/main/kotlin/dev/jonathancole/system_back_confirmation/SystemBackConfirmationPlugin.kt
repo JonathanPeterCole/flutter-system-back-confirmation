@@ -29,10 +29,14 @@ class SystemBackConfirmationPlugin: FlutterPlugin, MethodCallHandler, ActivityAw
     if (call.method == "getBackWillKillApp") {
       activity?.intent?.hasCategory(Intent.CATEGORY_LAUNCHER)
       if (android.os.Build.VERSION.SDK_INT >= 31) {
+        // Check the intent action and category as specified at
+        // https://developer.android.com/about/versions/12/behavior-changes-all#back-press
         val intent = activity?.intent
-        val willKillApp = intent != null &&
-            (intent.action != Intent.ACTION_MAIN || !intent.hasCategory(Intent.CATEGORY_LAUNCHER))
-        result.success(willKillApp)
+        val isRootLauncherActivity = (intent?.action == Intent.ACTION_MAIN && intent.hasCategory(Intent.CATEGORY_LAUNCHER))
+        // Although I couldn't find official documentation on this, Android also seems to kill
+        // activities if the referrer is non-null.
+        val hasReferrer = activity?.referrer != null
+        result.success(hasReferrer || !isRootLauncherActivity)
       } else {
         result.success(true)
       }

@@ -16,6 +16,6 @@ MaterialApp(
 
 ## Android 12 and later
 
-Android 12 changed the default system back gesture behaviour to keep the app's activity alive if it was started from the launcher. This plugin automatically adjusts it's behavour to disable the back confirmation if it won't kill the app.
+Android 12 changed the default system back gesture behaviour to keep the app's activity alive if it was started from the launcher. This plugin automatically adjusts it's behavour to enable/disable back confirmation based on the Android version and activity state.
 
 For more information on the changes in Android 12, see: https://developer.android.com/about/versions/12/behavior-changes-all#back-press
