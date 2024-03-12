@@ -27,7 +27,7 @@ class PopScopeConfirmation extends StatefulWidget {
   ///             child: const Text('Leave'),
   ///             onPressed: () {
   ///               Navigator.pop(context);
-  ///               Navigator.pop(context);
+  ///               popRouteOrExit(context);
   ///             },
   ///           ),
   ///           TextButton(
