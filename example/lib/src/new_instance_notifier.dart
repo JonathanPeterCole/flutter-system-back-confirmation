@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 /// Displays a SnackBar and provides haptic feedback when a new app instance
@@ -20,14 +21,16 @@ class _NewInstanceNotifierState extends State<NewInstanceNotifier> {
     super.didChangeDependencies();
     if (!hasNotified) {
       hasNotified = true;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('New app instance started')),
-      );
-      Future(() async {
-        for (int i = 0; i < 3; i++) {
-          await Future.delayed(const Duration(milliseconds: 200));
-          await HapticFeedback.vibrate();
-        }
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('New app instance started')),
+        );
+        Future(() async {
+          for (int i = 0; i < 3; i++) {
+            await Future.delayed(const Duration(milliseconds: 200));
+            await HapticFeedback.vibrate();
+          }
+        });
       });
     }
   }
