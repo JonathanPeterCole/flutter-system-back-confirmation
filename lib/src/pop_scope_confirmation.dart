@@ -38,8 +38,9 @@ class PopScopeConfirmation extends StatefulWidget {
   ///           ),
   ///         ],
   ///       ),
-  ///     ),
-  ///   ),
+  ///     );
+  ///   },
+  ///   child: //...
   /// );
   /// ```
   ///
@@ -109,8 +110,8 @@ class _PopScopeConfirmationState extends State<PopScopeConfirmation>
     super.dispose();
   }
 
-  void _onPopInvoked(bool _) {
-    widget.onPopBlocked?.call();
+  void _onPopInvoked(bool didPop) {
+    if (!didPop) widget.onPopBlocked?.call();
   }
 
   @override
